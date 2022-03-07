@@ -47,8 +47,8 @@ public class loginSteps {
 	public void i_can_see_username_and_password_field() {
 		
 		
-		String getUrl = driver.getPageSource();
-		System.out.println(getUrl);
+		String x = driver.getPageSource();
+		System.out.println(x);
 		driver.findElement(By.xpath("//*[@id='username']"));
 		driver.findElement(By.xpath("//*[@id='password']"));
 	    
