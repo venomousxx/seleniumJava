@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="5" time="66.438">
+    <testcase classname="About Us feature" name="go to about us" time="11.211">
+        <system-out><![CDATA[Given browser is open and go to stockbit....................................passed
+And i see About Us in main page.............................................passed
+When I tap About Us.........................................................passed
+Then I will direct to About Us page.........................................passed
+And i can see informasi perusahaan..........................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Login Stockbit" name="login with valid credential" time="16.66">
+        <system-out><![CDATA[Given browser is open and go to stockbit website............................passed
+And i see login button......................................................passed
+When I click login button in homepage.......................................passed
+And i can see username and password field...................................passed
+And i input "hardi.uus.droid@gmail.com" and "Stockbit123" correctly.........passed
+And i click login button....................................................passed
+Then I will direct to dashboard page........................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Login Stockbit" name="login with invalid credential" time="10.08">
+        <system-out><![CDATA[Given browser is open and go to stockbit website............................passed
+And i see login button......................................................passed
+When I click login button in homepage.......................................passed
+And i can see username and password field...................................passed
+And i input "hardi@gmail.com" and "Stockbit123" correctly...................passed
+And i click login button....................................................passed
+Then I will see error message displayed.....................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Login Stockbit" name="login with invalid credential 2" time="10.253">
+        <system-out><![CDATA[Given browser is open and go to stockbit website............................passed
+And i see login button......................................................passed
+When I click login button in homepage.......................................passed
+And i can see username and password field...................................passed
+And i input "hardi.uus.droid@gmail.com" and "123" correctly.................passed
+And i click login button....................................................passed
+Then I will see error message displayed.....................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="logout" name="logout from stockbit" time="18.022">
+        <system-out><![CDATA[Given I already login to stockbit...........................................passed
+When I click my avatar icon.................................................passed
+Then I see popover menu.....................................................passed
+And i click logout button...................................................passed
+Then i logout from stockbit.................................................passed
+]]></system-out>
+    </testcase>
+</testsuite>
