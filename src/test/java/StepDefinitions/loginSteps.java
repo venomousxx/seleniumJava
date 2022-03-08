@@ -7,39 +7,48 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import CommonSteps.DriverInitializer;
+import CommonSteps.commonSteps;
+import CommonSteps.loginPage;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class loginSteps {
+@SuppressWarnings("unused")
+public class loginSteps extends DriverInitializer {
 	
-	WebDriver driver = null;
-	String projectPath = System.getProperty("user.dir");
-
-	@Given("browser is open and go to stockbit website")
-	public void browser_is_open_and_go_to_stockbit_website() {
+	loginPage login = new loginPage(driver);
+	commonSteps helper = new commonSteps(driver);
+	
+	
+	@After
+	public void tearDown() {
+		System.out.println("broswer close");
+		helper.closeBrowser();
 		
-		System.getProperty("webdriver.chrome.driver", projectPath+"/driver/chromedrive");
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(120));
-		
-	    driver.get("https://stockbit.com/");
-	    
 	}
 	
+	@Given("browser is open and go to stockbit website")
+	public void browser_is_open_and_go_to_stockbit_website() {
+		startUp();
+	}
+
 	@Given("i see login button")
 	public void i_see_login_button() {
 
-		driver.findElement(By.xpath("//*[@class='login-ldn'][text()='Log In']"));
+		login.verifyLoginButtonHomePage();
 	    
 	}
  
 	@When("I click login button in homepage")
 	public void i_click_login_button_in_homepage() {
 		
-		driver.findElement(By.xpath("//*[@class='login-ldn'][text()='Log In']")).click();
+		login.clickLoginButtonHomepage();
 	    
 	}
 
@@ -47,43 +56,50 @@ public class loginSteps {
 	public void i_can_see_username_and_password_field() {
 		
 		
-		String x = driver.getPageSource();
-		System.out.println(x);
-		driver.findElement(By.xpath("//*[@id='username']"));
-		driver.findElement(By.xpath("//*[@id='password']"));
+		login.verifyLoginUrl();
+		login.verifyUsernameField();
+		login.verifyPasswordField();
+		
 	    
 	}
 
-	@When("i input username and password correctly")
-	public void i_input_username_and_password_correctly() {
+	@When("i input {string} and {string} correctly")
+	public void i_input_and_correctly(String userName, String password) {
 		
-		driver.findElement(By.xpath("//*[@id='username']")).sendKeys("hardi.uus.droid@gmail.com");
-		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("Stockbit123");
+		login.enterUsername(userName);
+		login.enterPassword(password);
 	    
 	}
 
 	@When("i click login button")
 	public void i_click_login_button() {
 		
-		driver.findElement(By.xpath("//*[@id='loginbutton']")).click();
+		login.clickLoginButton();
 	    
 	}
 
 	@Then("I will direct to dashboard page")
 	public void i_will_direct_to_dashboard_page() {
 		
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-		
-		if (driver.findElement(By.xpath("//*[@class='announcement-image']")) != null) {
-			
-			driver.findElement(By.xpath("//*[@type='button'][@class='ant-btn skip-btn ant-btn-lg']")).click();
-			
-		}
-		
-		
-		driver.findElement(By.xpath("//*[@class='trading-nonlogin']"));
+		login.handleAnnouncementModal();
+		login.verifyIsDashboardPage();
 	    
 	}
-
+	
+	@Then("I will see error message displayed")
+	public void i_will_see_error_message_displayed() {
+		
+		helper.wait(10);
+		driver.findElement(By.xpath("//*[text()='Username atau password salah. Mohon coba lagi.']"));
+		
+	}
+	
+	@Then("I can see SSO login appear")
+	public void I_can_see_SSO_login_appear() {
+		
+		login.verifySSOLogin();
+		
+	}
+	
 
 }
